@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: UrlShortener
+
+  datasource:
+    username: root
+    url: jdbc:mysql://localhost:3306/urlDb?createDatabaseIfNotExist==true
+    password: url
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    generate-ddl: true
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+
+

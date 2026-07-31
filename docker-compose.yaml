@@ -1,0 +1,18 @@
+services:
+  urlDb:
+    image: mysql:latest
+    container_name: url_Db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: url
+      MYSQL_DATABASE: urlDb
+    volumes:
+      - url:/var/lib/mysql
+    networks:
+      - url-network
+
+networks:
+  url-network:
+volumes:
+  url:
