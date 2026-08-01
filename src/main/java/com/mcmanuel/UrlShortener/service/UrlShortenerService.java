@@ -17,7 +17,7 @@ import java.util.Optional;
 public class UrlShortenerService {
     private UrlShortenerRepository urlShortenerRepo;
 
-    public String shortenUrl(String originalUrl) {
+    public String createShortUrl(String originalUrl) {
         Optional<UrlEntity> existingUrl = urlShortenerRepo.findByOriginalUrl(originalUrl);
 
         if (existingUrl.isPresent()) {
@@ -49,20 +49,21 @@ public class UrlShortenerService {
         String charSet = "QWERTYUIOPASDFGHJKLZXCVBNM";
         SecureRandom random = new SecureRandom();
         int count = (int)(10+Math.random()*5);
+
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < count; i++) {
             builder.append(charSet.charAt(random.nextInt(charSet.length())));
         }
-        return builder.toString();
+        return builder.toString().toLowerCase();
     }
 
     public String getShortCode(String originalUrl) {
-        UrlEntity savedUrl =urlShortenerRepo.findByShortCode(originalUrl).orElseThrow(()-> new ShortCodeNotFoundException("Invalid url"));
+        UrlEntity savedUrl =urlShortenerRepo.findByOriginalUrl(originalUrl).orElseThrow(()-> new OriginalUrlNotFoundException("Invalid url"));
         return savedUrl.getShortCode();
     }
 
     public String getOriginalUrl(String shortCode) {
-        UrlEntity savedUrl =urlShortenerRepo.findByOriginalUrl(shortCode).orElseThrow(()-> new OriginalUrlNotFoundException("Invalid url"));
+        UrlEntity savedUrl =urlShortenerRepo.findByShortCode(shortCode).orElseThrow(()-> new ShortCodeNotFoundException("Invalid url"));
         return savedUrl.getOriginalUrl();
     }
 }

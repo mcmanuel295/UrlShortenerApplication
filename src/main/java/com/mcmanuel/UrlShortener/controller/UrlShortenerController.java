@@ -4,20 +4,18 @@ import com.mcmanuel.UrlShortener.service.UrlShortenerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 @RequestMapping("/api/url")
 public class UrlShortenerController {
     private final UrlShortenerService shortenerService;
 
-    @PostMapping()
-    ResponseEntity<String> shsortenUrl(String url){
-        String shortUrl = shortenerService.shortenUrl(url);
+    @PostMapping("/")
+    ResponseEntity<String> shortenUrl(String url){
+        String shortUrl = shortenerService.createShortUrl(url);
         if (shortUrl == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
