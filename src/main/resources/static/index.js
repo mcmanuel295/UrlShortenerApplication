@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Populate fields
         originalUrlTextbox.value = rawUrl;
         
-        fetch('localhost:8080/api/url/shorten', {
+        fetch('localhost:8080/api/v1/url/shorten', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
