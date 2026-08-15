@@ -29,8 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
 
 
-ocalhost:8080/api/email
-        // Unhide result structure
+        // Unhidden result structure
         resultSection.classList.remove('hidden');
     });
 
