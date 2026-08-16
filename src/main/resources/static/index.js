@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('shortenerForm');
     const resultSection = document.getElementById('resultSection');
-    const originalUrlTextbox = document.getElementById('originalUrlTextbox');
-    const shortUrlTextbox = document.getElementById('shortUrlTextbox');
-    const copyButton = document.getElementById('copyButton');
+    const originalUrlDisplay = document.getElementById('originalUrlDisplay');
+    const shortUrlDisplay = document.getElementById('shortUrlDisplay');
+    const shortCodeDisplay = document.getElementById('shortCodeDisplay');
 
     // Handle Form submission
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const rawUrl = document.getElementById('urlInput').value;
 
-        // Populate fields
-        originalUrlTextbox.value = rawUrl;
+        // Display original URL
+        originalUrlDisplay.textContent = rawUrl;
         
-        fetch('localhost:8080/api/v1/url/shorten', {
+        fetch('http://localhost:8080/api/v1/url/shorten', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -22,31 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => response.json())
         .then(data => {
-            shortUrlTextbox.value = data.shortUrl;
+            shortUrlDisplay.textContent = data.shortUrl;
+            shortUrlDisplay.href = data.shortUrl;
+            // Extract short code from the response
+            const shortCode = data.shortUrl.split('/').pop();
+            shortCodeDisplay.textContent = shortCode;
         }).catch(error => {
-            console.log("error"+ error);
+            console.log("Error: " + error);
+            alert('Failed to shorten URL');
         });
-        
 
-
-        // Unhidden result structure
+        // Show result section
         resultSection.classList.remove('hidden');
-    });
-
-    // Quick Clipboard Copy Action
-    copyButton.addEventListener('click', () => {
-        navigator.clipboard.writeText(shortUrlTextbox.value).then(() => {
-            // Update UI status to feedback successfully
-            copyButton.textContent = 'Copied!';
-            copyButton.classList.replace('text-slate-600', 'text-emerald-600');
-            copyButton.classList.replace('border-slate-200', 'border-emerald-200');
-            
-            // Revert state back after a short duration
-            setTimeout(() => {
-                copyButton.textContent = 'Copy';
-                copyButton.classList.replace('text-emerald-600', 'text-slate-600');
-                copyButton.classList.replace('border-emerald-200', 'border-slate-200');
-            }, 2000);
-        });
     });
 });
