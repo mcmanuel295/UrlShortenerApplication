@@ -5,6 +5,7 @@ import com.mcmanuel.UrlShortener.exception.CodeGenerationException;
 import com.mcmanuel.UrlShortener.exception.OriginalUrlNotFoundException;
 import com.mcmanuel.UrlShortener.exception.ShortCodeNotFoundException;
 import com.mcmanuel.UrlShortener.repository.UrlShortenerRepository;
+import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UrlShortenerService {
-    private UrlShortenerRepository urlShortenerRepo;
+    private final UrlShortenerRepository urlShortenerRepo;
 
-    public String createShortUrl(String originalUrl) {
+    public String createShortUrl(@Nonnull String originalUrl) {
         Optional<UrlEntity> existingUrl = urlShortenerRepo.findByOriginalUrl(originalUrl);
 
         if (existingUrl.isPresent()) {
@@ -37,8 +38,8 @@ public class UrlShortenerService {
         while (urlShortenerRepo.findByShortCode(shortUrl).isPresent());
 
         UrlEntity createdEntity =  UrlEntity.builder()
-                .originalUrl(shortUrl)
-                .shortCode(originalUrl)
+                .originalUrl(originalUrl)
+                .shortCode(shortUrl)
                 .createdAt(LocalDateTime.now())
                 .build();
 
