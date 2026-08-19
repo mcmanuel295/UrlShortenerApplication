@@ -4,78 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Shortener</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Custom CSS Link -->
     <link rel="stylesheet" href="index.css">
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-400 via-purple-400 to-pink-300">
+<body>
 
-    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
+    <div class="container">
         
         <!-- Header -->
-        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">
-            🔗 URL Shortener
-        </h1>
+        <h1 class="header">🔗 URL Shortener</h1>
 
         <!-- Input Section -->
-        <form id="shortenerForm" class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Enter URL to shorten:</label>
+        <form id="shortenerForm" class="form">
+            <div class="form-group">
+                <label for="urlInput" class="label">Enter URL to shorten:</label>
                 <input 
                     type="url" 
                     id="urlInput" 
                     required
                     placeholder="https://www.github.com" 
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                    class="input-field"
                 />
             </div>
             <button 
                 type="submit" 
-                class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-all active:scale-95"
+                class="btn-submit"
             >
                 Shorten URL
             </button>
         </form>
 
         <!-- Result Section -->
-        <div id="resultSection" class="hidden mt-6 space-y-3 animate-fade-in">
+        <div id="resultSection" class="result-section hidden animate-fade-in">
             
             <!-- Success Message -->
-            <div class="flex items-center gap-2 text-green-600 font-semibold">
-                <span class="text-xl">✓</span>
+            <div class="success-message">
+                <span class="success-icon">✓</span>
                 <span>Short URL Created!</span>
             </div>
 
             <!-- Original URL Field -->
-            <div class="space-y-1">
-                <label class="block text-sm font-semibold text-gray-700">Original URL:</label>
-                <p id="originalUrlDisplay" class="text-gray-600 text-sm break-all"></p>
+            <div class="form-group">
+                <label for="originalUrlTextbox" class="label">Original URL:</label>
+                <input 
+                    type="text" 
+                    id="originalUrlTextbox" 
+                    readonly
+                    class="input-field readonly-field"
+                />
             </div>
 
             <!-- Short URL Field -->
-            <div class="space-y-1">
-                <label class="block text-sm font-semibold text-gray-700">Short URL:</label>
-                <a 
-                    id="shortUrlDisplay" 
-                    href="#"
-                    target="_blank"
-                    class="text-blue-500 hover:text-blue-700 hover:underline text-sm break-all"
-                >
-                </a>
-            </div>
-
-            <!-- Short Code Field -->
-            <div class="space-y-1">
-                <label class="block text-sm font-semibold text-gray-700">Short Code:</label>
-                <p id="shortCodeDisplay" class="text-gray-600 text-sm font-mono"></p>
+            <div class="form-group">
+                <label for="shortUrlTextbox" class="label">Short URL:</label>
+                <div class="input-with-button">
+                    <input 
+                        type="text" 
+                        id="shortUrlTextbox" 
+                        readonly
+                        class="input-field readonly-field short-url-field"
+                    />
+                    <button 
+                        id="copyButton"
+                        type="button"
+                        class="btn-copy"
+                    >
+                        Copy
+                    </button>
+                </div>
             </div>
         </div>
 
     </div>
 
     <!-- Custom Script Link -->
-    <script src="script.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
